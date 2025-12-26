@@ -10,12 +10,12 @@ public class FordFulkerson {
 
     public static class Result {
         public int maxFlow;
-        public List<Graph> steps;
+        public Graph graph; // The single graph instance used
+        public List<int[]> flowHistory; // Snapshots of flow values only
         public List<Edge> minCutEdges;
-        public Graph finalGraph;
 
         public Result() {
-            this.steps = new ArrayList<>();
+            this.flowHistory = new ArrayList<>();
             this.minCutEdges = new ArrayList<>();
         }
     }
@@ -23,8 +23,13 @@ public class FordFulkerson {
     public static Result run(Graph inputGraph, String sourceId, String sinkId) {
         Result result = new Result();
         
-        Graph graph = copyGraph(inputGraph);
-        result.steps.add(copyGraph(graph));
+        // We work on a copy so we don't modify the original definition outside this run
+        // But we only copy the structure ONCE.
+        Graph graph = copyGraphStructure(inputGraph);
+        result.graph = graph;
+
+        // Save initial state (flow 0)
+        result.flowHistory.add(captureFlows(graph));
 
         Node source = graph.getNodeById(sourceId);
         Node sink = graph.getNodeById(sinkId);
@@ -76,14 +81,24 @@ public class FordFulkerson {
             }
 
             maxFlow += pathFlow;
-            result.steps.add(copyGraph(graph));
+            
+            // Snapshot only the flow values
+            result.flowHistory.add(captureFlows(graph));
         }
 
         result.maxFlow = maxFlow;
-        result.finalGraph = graph;
-        result.minCutEdges = findMinCut(graph, source, inputGraph);
+        result.minCutEdges = findMinCut(graph, source); 
 
         return result;
+    }
+
+    private static int[] captureFlows(Graph graph) {
+        List<Edge> edges = graph.getEdges();
+        int[] flows = new int[edges.size()];
+        for (int i = 0; i < edges.size(); i++) {
+            flows[i] = edges.get(i).getFlow();
+        }
+        return flows;
     }
 
     private static boolean bfs(Graph graph, Node source, Node sink,
@@ -126,7 +141,7 @@ public class FordFulkerson {
         return false;
     }
 
-    private static List<Edge> findMinCut(Graph finalGraph, Node source, Graph originalGraph) {
+    private static List<Edge> findMinCut(Graph graph, Node source) {
         Set<Node> reachable = new HashSet<>();
         Queue<Node> queue = new LinkedList<>();
         queue.add(source);
@@ -134,7 +149,7 @@ public class FordFulkerson {
 
         while (!queue.isEmpty()) {
             Node u = queue.poll();
-            for (Edge edge : finalGraph.getIncidentEdges(u.getId())) {
+            for (Edge edge : graph.getIncidentEdges(u.getId())) {
                 if (edge.getSource() == u) {
                     Node v = edge.getDestination();
                     if (!reachable.contains(v) && edge.getCapacity() > edge.getFlow()) {
@@ -153,9 +168,9 @@ public class FordFulkerson {
 
         List<Edge> minCut = new ArrayList<>();
         
-        for (Edge e : originalGraph.getEdges()) {
-             boolean uReachable = reachable.stream().anyMatch(n -> n.getId().equals(e.getSource().getId()));
-             boolean vReachable = reachable.stream().anyMatch(n -> n.getId().equals(e.getDestination().getId()));
+        for (Edge e : graph.getEdges()) {
+             boolean uReachable = reachable.contains(e.getSource());
+             boolean vReachable = reachable.contains(e.getDestination());
 
              if (uReachable && !vReachable) {
                  minCut.add(e);
@@ -164,7 +179,7 @@ public class FordFulkerson {
         return minCut;
     }
 
-    private static Graph copyGraph(Graph original) {
+    private static Graph copyGraphStructure(Graph original) {
         Graph copy = new Graph();
         Map<String, Node> nodeMap = new HashMap<>();
 
@@ -178,7 +193,7 @@ public class FordFulkerson {
             Node src = nodeMap.get(e.getSource().getId());
             Node dst = nodeMap.get(e.getDestination().getId());
             Edge newEdge = new Edge(src, dst, e.getCapacity());
-            newEdge.setFlow(e.getFlow());
+            newEdge.setFlow(0); // Reset flow in copy
             copy.addEdge(newEdge);
         }
         return copy;

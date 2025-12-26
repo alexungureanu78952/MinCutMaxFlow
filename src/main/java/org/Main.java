@@ -33,6 +33,8 @@ public class Main {
             frame.setLayout(new BorderLayout());
 
             graphPanel = new GraphPanel();
+            // We set the graph once. The structure never changes.
+            graphPanel.setGraph(result.graph);
             frame.add(graphPanel, BorderLayout.CENTER);
 
             JPanel controlPanel = new JPanel();
@@ -49,7 +51,7 @@ public class Main {
             });
 
             nextBtn.addActionListener(e -> {
-                if (currentStep < result.steps.size() - 1) {
+                if (currentStep < result.flowHistory.size() - 1) {
                     currentStep++;
                     updateView();
                 }
@@ -67,22 +69,39 @@ public class Main {
 
             frame.add(controlPanel, BorderLayout.SOUTH);
 
-            updateView();
+            updateView(); // Initial state
 
             frame.setVisible(true);
         });
     }
 
     private static void updateView() {
-        Graph currentGraph = result.steps.get(currentStep);
-        graphPanel.setGraph(currentGraph);
+        // Retrieve the flow values for this step
+        int[] flows = result.flowHistory.get(currentStep);
         
-        if (currentStep == result.steps.size() - 1) {
+        // Apply flows to the graph edges
+        restoreFlows(result.graph, flows);
+        
+        // If it's the last step, show Min-Cut info and highlight edges
+        if (currentStep == result.flowHistory.size() - 1) {
             graphPanel.setHighlightEdges(result.minCutEdges);
             infoLabel.setText("Final Step. Max Flow: " + result.maxFlow + ". Min-Cut Edges Highlighted.");
         } else {
             graphPanel.setHighlightEdges(null);
-            infoLabel.setText("Step " + (currentStep + 1) + " / " + result.steps.size());
+            infoLabel.setText("Step " + (currentStep + 1) + " / " + result.flowHistory.size());
+        }
+        
+        graphPanel.repaint();
+    }
+    
+    private static void restoreFlows(Graph graph, int[] flows) {
+        List<Edge> edges = graph.getEdges();
+        if (edges.size() != flows.length) {
+            System.err.println("Mismatch between edges count and flow history size!");
+            return;
+        }
+        for (int i = 0; i < edges.size(); i++) {
+            edges.get(i).setFlow(flows[i]);
         }
     }
 

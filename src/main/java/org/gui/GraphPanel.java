@@ -70,8 +70,6 @@ public class GraphPanel extends JPanel {
     private void drawNormalEdges(Graphics2D g2) {
         for (Edge edge : graph.getEdges()) {
             boolean isHighlighted = false;
-            // Check if this edge corresponds to a highlighted edge (Min-Cut)
-            // We match by ID of source/dest because graph instances might differ
             if (highlightEdges != null) {
                 for (Edge he : highlightEdges) {
                     if (he.getSource().getId().equals(edge.getSource().getId()) &&
@@ -99,21 +97,19 @@ public class GraphPanel extends JPanel {
         g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[]{10.0f}, 0.0f));
 
         for (Edge edge : graph.getEdges()) {
-            // Forward residual
             int remCap = edge.getCapacity() - edge.getFlow();
             if (remCap > 0) {
                 drawArrow(g2, edge.getSource(), edge.getDestination(), String.valueOf(remCap));
             }
 
-            // Backward residual
             int flow = edge.getFlow();
             if (flow > 0) {
-                g2.setColor(Color.MAGENTA); // Different color for backward edges
+                g2.setColor(Color.MAGENTA);
                 drawArrow(g2, edge.getDestination(), edge.getSource(), String.valueOf(flow));
-                g2.setColor(Color.BLUE); // Reset
+                g2.setColor(Color.BLUE);
             }
         }
-        g2.setStroke(new BasicStroke(1)); // Reset
+        g2.setStroke(new BasicStroke(1));
     }
 
     private void drawArrow(Graphics2D g2, Node u, Node v, String label) {
@@ -122,7 +118,6 @@ public class GraphPanel extends JPanel {
         int x2 = v.getX();
         int y2 = v.getY();
 
-        // Adjust endpoints to touch circle border roughly
         double angle = Math.atan2(y2 - y1, x2 - x1);
         int r = 15;
         int startX = (int) (x1 + r * Math.cos(angle));
@@ -132,13 +127,8 @@ public class GraphPanel extends JPanel {
 
         g2.drawLine(startX, startY, endX, endY);
 
-        // Arrowhead
         int arrowSize = 8;
-        g2.fillPolygon(new int[]{endX, endX - arrowSize, endX - arrowSize},
-                       new int[]{endY, endY - arrowSize, endY + arrowSize}, 3);
         
-        // Transform for rotation to draw arrow head correctly? 
-        // Simple polygon above is not rotated. Let's do better.
         AffineTransform tx = g2.getTransform();
         AffineTransform rotate = AffineTransform.getRotateInstance(angle, endX, endY);
         g2.transform(rotate);
@@ -146,15 +136,10 @@ public class GraphPanel extends JPanel {
                        new int[]{endY, endY - arrowSize / 2, endY + arrowSize / 2}, 3);
         g2.setTransform(tx);
 
-        // Label
         int midX = (startX + endX) / 2;
         int midY = (startY + endY) / 2;
         
-        // Offset label slightly to avoid overlap with line
         g2.setColor(Color.DARK_GRAY);
-        // Add background to text for readability?
         g2.drawString(label, midX + 5, midY - 5);
-        // Restore color
-        // (Caller handles color setting usually, but here we forced Gray for text)
     }
 }

@@ -23,9 +23,8 @@ public class FordFulkerson {
     public static Result run(Graph inputGraph, String sourceId, String sinkId) {
         Result result = new Result();
         
-        // Deep copy initial graph to work on
         Graph graph = copyGraph(inputGraph);
-        result.steps.add(copyGraph(graph)); // Initial state
+        result.steps.add(copyGraph(graph));
 
         Node source = graph.getNodeById(sourceId);
         Node sink = graph.getNodeById(sinkId);
@@ -82,7 +81,7 @@ public class FordFulkerson {
 
         result.maxFlow = maxFlow;
         result.finalGraph = graph;
-        result.minCutEdges = findMinCut(graph, source, inputGraph); // Find cuts mapped to original edges
+        result.minCutEdges = findMinCut(graph, source, inputGraph);
 
         return result;
     }
@@ -143,10 +142,6 @@ public class FordFulkerson {
                         queue.add(v);
                     }
                 } else if (edge.getDestination() == u) {
-                    // Check backward edges in residual graph?
-                    // Standard Min-Cut definition usually looks at reachable in residual graph.
-                    // If flow > 0, there is a backward edge u->v with capacity flow.
-                    // So if edge is v->u and flow > 0, then in residual there is u->v.
                      Node v = edge.getSource();
                      if (!reachable.contains(v) && edge.getFlow() > 0) {
                          reachable.add(v);
@@ -157,14 +152,8 @@ public class FordFulkerson {
         }
 
         List<Edge> minCut = new ArrayList<>();
-        // Compare edges to find those crossing from reachable to unreachable
-        // We need to return edges from the *original* graph structure corresponding to the cut.
-        // Since nodes/edges are copies, we match by ID or index.
-        // Actually, easier to just match by ID since structure is same.
         
         for (Edge e : originalGraph.getEdges()) {
-             // Find corresponding nodes in our reachable set logic
-             // reachable set contains nodes from finalGraph. They have same IDs as original.
              boolean uReachable = reachable.stream().anyMatch(n -> n.getId().equals(e.getSource().getId()));
              boolean vReachable = reachable.stream().anyMatch(n -> n.getId().equals(e.getDestination().getId()));
 

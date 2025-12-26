@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82ebd077-1554-4c4b-b419-b2cd1d7c9ea3" name="Changes" comment="" />
+    <list default="true" id="82ebd077-1554-4c4b-b419-b2cd1d7c9ea3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/algorithm/FordFulkerson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/algorithm/FordFulkerson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/GraphPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/GraphPanel.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +17,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "alexungureanu78952"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/alexungureanu78952/MinCutMaxFlow.git",
+    "accountId": "35514988-11b0-434f-a91b-35339882bd10"
+  }
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 6
 }]]></component>
@@ -23,12 +39,18 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "D:/GitHub/MinCutMaxFlow/src/main/java/org/Main.java",
     "settings.editor.selected.configurable": "advanced.settings",
@@ -51,7 +73,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766750824681</updated>
-      <workItem from="1766750826277" duration="133000" />
+      <workItem from="1766750826277" duration="1304000" />
     </task>
     <servers />
   </component>
@@ -63,7 +85,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/Main.java</url>
-          <line>13</line>
+          <line>72</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

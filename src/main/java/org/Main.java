@@ -67,7 +67,7 @@ public class Main {
 
             frame.add(controlPanel, BorderLayout.SOUTH);
 
-            updateView(); // Initial state
+            updateView();
 
             frame.setVisible(true);
         });
@@ -77,7 +77,6 @@ public class Main {
         Graph currentGraph = result.steps.get(currentStep);
         graphPanel.setGraph(currentGraph);
         
-        // If it's the last step, show Min-Cut info and highlight edges
         if (currentStep == result.steps.size() - 1) {
             graphPanel.setHighlightEdges(result.minCutEdges);
             infoLabel.setText("Final Step. Max Flow: " + result.maxFlow + ". Min-Cut Edges Highlighted.");
@@ -107,7 +106,7 @@ public class Main {
         g.addEdge(new Edge(b, d, 9));
         g.addEdge(new Edge(c, t, 10));
         g.addEdge(new Edge(d, t, 10));
-        g.addEdge(new Edge(d, c, 6)); // Extra complexity
+        g.addEdge(new Edge(d, c, 6));
 
         return g;
     }

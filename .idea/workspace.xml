@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82ebd077-1554-4c4b-b419-b2cd1d7c9ea3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/algorithm/FordFulkerson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/algorithm/FordFulkerson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/GraphPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/GraphPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +52,9 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "D:/GitHub/MinCutMaxFlow/src/main/java/org/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "advanced.settings",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
@@ -73,7 +75,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766750824681</updated>
-      <workItem from="1766750826277" duration="1304000" />
+      <workItem from="1766750826277" duration="6009000" />
     </task>
     <servers />
   </component>
@@ -85,7 +87,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/Main.java</url>
-          <line>72</line>
+          <line>73</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

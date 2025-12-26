@@ -20,12 +20,14 @@ public class FordFulkerson {
         }
     }
 
-    public static Result run(Graph inputGraph, String sourceId, String sinkId) {
+    public static Result run(Graph graph, String sourceId, String sinkId) {
         Result result = new Result();
         
-        Graph graph = copyGraphStructure(inputGraph);
+        // Use the input graph directly
+        graph.resetFlow(); 
         result.graph = graph;
 
+        // Save initial state (flow 0)
         result.flowHistory.add(captureFlows(graph));
 
         Node source = graph.getNodeById(sourceId);
@@ -173,25 +175,5 @@ public class FordFulkerson {
              }
         }
         return minCut;
-    }
-
-    private static Graph copyGraphStructure(Graph original) {
-        Graph copy = new Graph();
-        Map<String, Node> nodeMap = new HashMap<>();
-
-        for (Node n : original.getNodes()) {
-            Node newNode = new Node(n.getId(), n.getX(), n.getY());
-            copy.addNode(newNode);
-            nodeMap.put(newNode.getId(), newNode);
-        }
-
-        for (Edge e : original.getEdges()) {
-            Node src = nodeMap.get(e.getSource().getId());
-            Node dst = nodeMap.get(e.getDestination().getId());
-            Edge newEdge = new Edge(src, dst, e.getCapacity());
-            newEdge.setFlow(0);
-            copy.addEdge(newEdge);
-        }
-        return copy;
     }
 }

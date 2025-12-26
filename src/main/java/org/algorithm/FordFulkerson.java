@@ -101,7 +101,7 @@ public class FordFulkerson {
 
             if (u == sink) return true;
 
-            for (Edge edge : graph.getEdges()) {
+            for (Edge edge : graph.getIncidentEdges(u.getId())) {
                 if (edge.getSource() == u) {
                     Node v = edge.getDestination();
                     if (!visited.contains(v) && edge.getCapacity() > edge.getFlow()) {
@@ -134,7 +134,7 @@ public class FordFulkerson {
 
         while (!queue.isEmpty()) {
             Node u = queue.poll();
-            for (Edge edge : finalGraph.getEdges()) {
+            for (Edge edge : finalGraph.getIncidentEdges(u.getId())) {
                 if (edge.getSource() == u) {
                     Node v = edge.getDestination();
                     if (!reachable.contains(v) && edge.getCapacity() > edge.getFlow()) {

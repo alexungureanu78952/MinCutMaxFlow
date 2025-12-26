@@ -23,11 +23,9 @@ public class FordFulkerson {
     public static Result run(Graph graph, String sourceId, String sinkId) {
         Result result = new Result();
         
-        // Use the input graph directly
         graph.resetFlow(); 
         result.graph = graph;
 
-        // Save initial state (flow 0)
         result.flowHistory.add(captureFlows(graph));
 
         Node source = graph.getNodeById(sourceId);

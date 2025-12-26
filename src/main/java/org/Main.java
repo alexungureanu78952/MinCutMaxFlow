@@ -33,7 +33,6 @@ public class Main {
             frame.setLayout(new BorderLayout());
 
             graphPanel = new GraphPanel();
-            // We set the graph once. The structure never changes.
             graphPanel.setGraph(result.graph);
             frame.add(graphPanel, BorderLayout.CENTER);
 
@@ -69,20 +68,17 @@ public class Main {
 
             frame.add(controlPanel, BorderLayout.SOUTH);
 
-            updateView(); // Initial state
+            updateView();
 
             frame.setVisible(true);
         });
     }
 
     private static void updateView() {
-        // Retrieve the flow values for this step
         int[] flows = result.flowHistory.get(currentStep);
         
-        // Apply flows to the graph edges
         restoreFlows(result.graph, flows);
         
-        // If it's the last step, show Min-Cut info and highlight edges
         if (currentStep == result.flowHistory.size() - 1) {
             graphPanel.setHighlightEdges(result.minCutEdges);
             infoLabel.setText("Final Step. Max Flow: " + result.maxFlow + ". Min-Cut Edges Highlighted.");
@@ -97,7 +93,6 @@ public class Main {
     private static void restoreFlows(Graph graph, int[] flows) {
         List<Edge> edges = graph.getEdges();
         if (edges.size() != flows.length) {
-            System.err.println("Mismatch between edges count and flow history size!");
             return;
         }
         for (int i = 0; i < edges.size(); i++) {

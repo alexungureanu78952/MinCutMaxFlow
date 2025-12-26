@@ -10,8 +10,8 @@ public class FordFulkerson {
 
     public static class Result {
         public int maxFlow;
-        public Graph graph; // The single graph instance used
-        public List<int[]> flowHistory; // Snapshots of flow values only
+        public Graph graph;
+        public List<int[]> flowHistory;
         public List<Edge> minCutEdges;
 
         public Result() {
@@ -23,12 +23,9 @@ public class FordFulkerson {
     public static Result run(Graph inputGraph, String sourceId, String sinkId) {
         Result result = new Result();
         
-        // We work on a copy so we don't modify the original definition outside this run
-        // But we only copy the structure ONCE.
         Graph graph = copyGraphStructure(inputGraph);
         result.graph = graph;
 
-        // Save initial state (flow 0)
         result.flowHistory.add(captureFlows(graph));
 
         Node source = graph.getNodeById(sourceId);
@@ -82,7 +79,6 @@ public class FordFulkerson {
 
             maxFlow += pathFlow;
             
-            // Snapshot only the flow values
             result.flowHistory.add(captureFlows(graph));
         }
 
@@ -193,7 +189,7 @@ public class FordFulkerson {
             Node src = nodeMap.get(e.getSource().getId());
             Node dst = nodeMap.get(e.getDestination().getId());
             Edge newEdge = new Edge(src, dst, e.getCapacity());
-            newEdge.setFlow(0); // Reset flow in copy
+            newEdge.setFlow(0);
             copy.addEdge(newEdge);
         }
         return copy;
